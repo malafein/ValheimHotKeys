@@ -1,0 +1,9 @@
+{
+    "name": "ValheimHotKeys",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/malafein/ValheimHotKeys",
+    "description": "Configurable hotkeys for various Valheim actions.",
+    "dependencies": [
+        "denikson-BepInExPack_Valheim-5.4.2100"
+    ]
+}

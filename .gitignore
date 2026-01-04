@@ -1,0 +1,6 @@
+bin/
+obj/
+staging/
+Releases/
+*.user
+.DS_Store
