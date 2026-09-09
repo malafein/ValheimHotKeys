@@ -10,7 +10,7 @@ namespace ValheimHotKeys
     {
         public const string ModGUID = "com.malafein.valheimhotkeys";
         public const string ModName = "Valheim HotKeys";
-        public const string ModVersion = "1.0.0";
+        public const string ModVersion = "1.1.0";
 
         public static ConfigEntry<KeyboardShortcut> ToggleHUDConfig;
         public static ConfigEntry<KeyboardShortcut>[] HotbarConfigs = new ConfigEntry<KeyboardShortcut>[8];
@@ -116,7 +116,9 @@ namespace ValheimHotKeys
                         {
                             KeyCode capturedKey = KeyCode.None;
                             if (e.keyCode != KeyCode.None) capturedKey = e.keyCode;
-                            else if (e.button >= 0 && e.button <= 6) capturedKey = (KeyCode)((int)KeyCode.Mouse0 + e.button);
+                            // Valheim 1.0's ZInput only resolves Mouse0-Mouse4, so binding
+                            // a higher mouse button would capture a key that never fires.
+                            else if (e.button >= 0 && e.button <= 4) capturedKey = (KeyCode)((int)KeyCode.Mouse0 + e.button);
 
                             // IGNORE Mouse0 (Left Click) to prevent interference with UI buttons
                             if (capturedKey != KeyCode.None && capturedKey != KeyCode.Mouse0)

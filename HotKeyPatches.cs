@@ -1,3 +1,4 @@
+using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
 using BepInEx.Configuration;
@@ -7,17 +8,22 @@ namespace ValheimHotKeys
     [HarmonyPatch]
     public static class HotKeyPatches
     {
+        // Player.TakeInput() is protected, so it has to be reached by reflection.
+        // Resolved once instead of per-frame inside the Player.Update postfix.
+        private static readonly MethodInfo TakeInputMethod = AccessTools.Method(typeof(Player), "TakeInput");
+
+        // Valheim 1.0 drives HUD visibility through Hud.m_userHidden, which Hud.Update
+        // feeds into SetVisible(); that moves m_rootObject off-screen instead of
+        // deactivating it. Flipping the flag from a prefix lets the vanilla Update apply
+        // it the same frame and keeps this hotkey in sync with the game's own Ctrl+F3
+        // toggle and with Hud.IsVisible().
         [HarmonyPatch(typeof(Hud), "Update")]
-        [HarmonyPostfix]
-        public static void Hud_Update_Postfix(Hud __instance)
+        [HarmonyPrefix]
+        public static void Hud_Update_Prefix(Hud __instance)
         {
-            if (Plugin.ToggleHUDConfig.Value.IsDown())
+            if (InputHelpers.IsDownExact(Plugin.ToggleHUDConfig.Value))
             {
-                if (__instance.m_rootObject != null)
-                {
-                    bool isActive = __instance.m_rootObject.activeSelf;
-                    __instance.m_rootObject.SetActive(!isActive);
-                }
+                __instance.m_userHidden = !__instance.m_userHidden;
             }
         }
 
@@ -32,7 +38,7 @@ namespace ValheimHotKeys
                 return;
             }
 
-            bool takeInput = (bool)AccessTools.Method(typeof(Player), "TakeInput").Invoke(__instance, null);
+            bool takeInput = (bool)TakeInputMethod.Invoke(__instance, null);
             if (!takeInput)
             {
                 return;
@@ -93,26 +99,76 @@ namespace ValheimHotKeys
         }
     }
 
+    // Valheim 1.0 runs on Unity 6 with the new Input System package, so the legacy
+    // UnityEngine.Input API no longer reports key state -- and neither does BepInEx's
+    // KeyboardShortcut.IsDown(), which is built on it. ZInput exposes KeyCode-based
+    // equivalents backed by the new system, so every key read goes through it.
     public static class InputHelpers
     {
+        private static readonly KeyCode[] ModifierKeys =
+        {
+            KeyCode.LeftControl,
+            KeyCode.RightControl,
+            KeyCode.LeftShift,
+            KeyCode.RightShift,
+            KeyCode.LeftAlt,
+            KeyCode.RightAlt
+        };
+
         /// <summary>
         /// A more permissive version of KeyboardShortcut.IsDown() that ignores extra keys being held (like 'W').
         /// </summary>
         public static bool IsDownPermissive(KeyboardShortcut shortcut)
         {
-            if (shortcut.MainKey == KeyCode.None) return false;
-            
-            // The main key MUST be pressed THIS frame
-            if (!Input.GetKeyDown(shortcut.MainKey)) return false;
+            if (!IsMainKeyDown(shortcut)) return false;
 
             // All required modifiers MUST be held
             foreach (var mod in shortcut.Modifiers)
             {
-                if (!Input.GetKey(mod)) return false;
+                if (!ZInput.GetKey(mod, false)) return false;
             }
 
             // We explicitly DON'T check if other keys are held to allow usage while walking/running.
             return true;
+        }
+
+        /// <summary>
+        /// Requires an exact modifier match: every listed modifier held and no other one.
+        /// Used where a permissive match would also fire on a vanilla binding that shares
+        /// the same main key -- Valheim 1.0 toggles the HUD on Ctrl+F3, so a plain F3
+        /// binding must not respond to it as well.
+        /// </summary>
+        public static bool IsDownExact(KeyboardShortcut shortcut)
+        {
+            if (!IsMainKeyDown(shortcut)) return false;
+
+            foreach (var mod in ModifierKeys)
+            {
+                bool required = false;
+                foreach (var wanted in shortcut.Modifiers)
+                {
+                    if (wanted == mod)
+                    {
+                        required = true;
+                        break;
+                    }
+                }
+
+                if (ZInput.GetKey(mod, false) != required) return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsMainKeyDown(KeyboardShortcut shortcut)
+        {
+            KeyCode mainKey = shortcut.MainKey;
+
+            // ZInput rejects Mouse5/Mouse6 and anything above JoystickButton19.
+            if (mainKey == KeyCode.None || !ZInput.IsKeyCodeValid(mainKey)) return false;
+
+            // The main key MUST be pressed THIS frame
+            return ZInput.GetKeyDown(mainKey, false);
         }
     }
 }
