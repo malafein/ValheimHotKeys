@@ -29,7 +29,7 @@ A Valheim mod to add configurable hotkeys for various actions.
 2. Download the latest release of ValheimHotKeys from [GitHub](https://github.com/malafein/ValheimHotKeys/releases).
 3. Extract the `ValheimHotKeys.dll` file into your `<Valheim Install Folder>\BepInEx\plugins` directory.
 
-> **Compatibility**: version 1.1.0 and later require Valheim 1.0 or newer. Use 1.0.0 for earlier game versions.
+> **Compatibility**: tested with Valheim 1.0.
 
 ## Configuration
 
@@ -38,7 +38,7 @@ There you can set the HUD toggle key, the eight hotbar slot bindings, and the ei
 
 **Recommendation**: Use a configuration manager like [shudnal's Configuration Manager](https://github.com/shudnal/ConfigurationManager) to easily edit bindings and settings in-game.
 
-Mouse buttons may be bound, but only `Mouse0` through `Mouse4` — Valheim does not resolve higher mouse buttons.
+Mouse buttons may be bound, but only `Mouse0` through `Mouse4`, the buttons Valheim's input system supports.
 
 ## Changelog
 

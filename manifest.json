@@ -1,6 +1,6 @@
 {
     "name": "ValheimHotKeys",
-    "version_number": "1.1.0",
+    "version_number": "1.1.1",
     "website_url": "https://github.com/malafein/ValheimHotKeys",
     "description": "Configurable hotkeys for various Valheim actions.",
     "dependencies": [

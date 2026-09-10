@@ -1,8 +1,11 @@
 # Changelog
 
+## 1.1.1
+* Corrected documentation.
+
 ## 1.1.0
-* Updated for the Valheim 1.0 release, which moved the game to Unity 6. Version 1.0.0 of this mod does not work with Valheim 1.0, so updating is required.
-* Mouse bindings are now limited to Mouse0 through Mouse4. Valheim 1.0 no longer recognizes higher mouse buttons.
+* Updated for the Valheim 1.0 release, which moved the game to Unity 6.
+* Mouse bindings are now limited to Mouse0 through Mouse4, the buttons Valheim's input system supports.
 
 ## 1.0.0
 * Initial release.

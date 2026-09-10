@@ -10,7 +10,7 @@ namespace ValheimHotKeys
     {
         public const string ModGUID = "com.malafein.valheimhotkeys";
         public const string ModName = "Valheim HotKeys";
-        public const string ModVersion = "1.1.0";
+        public const string ModVersion = "1.1.1";
 
         public static ConfigEntry<KeyboardShortcut> ToggleHUDConfig;
         public static ConfigEntry<KeyboardShortcut>[] HotbarConfigs = new ConfigEntry<KeyboardShortcut>[8];

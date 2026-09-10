@@ -99,10 +99,10 @@ namespace ValheimHotKeys
         }
     }
 
-    // Valheim 1.0 runs on Unity 6 with the new Input System package, so the legacy
-    // UnityEngine.Input API no longer reports key state -- and neither does BepInEx's
-    // KeyboardShortcut.IsDown(), which is built on it. ZInput exposes KeyCode-based
-    // equivalents backed by the new system, so every key read goes through it.
+    // Every key read goes through ZInput, Valheim's own input layer, which Valheim 1.0
+    // builds on Unity 6's Input System. BepInEx's KeyboardShortcut.IsDown() also still
+    // works (it falls back to the Input System when legacy input is unavailable), but
+    // ZInput keeps key handling on the same mapping the game itself uses.
     public static class InputHelpers
     {
         private static readonly KeyCode[] ModifierKeys =
