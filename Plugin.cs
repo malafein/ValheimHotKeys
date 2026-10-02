@@ -11,11 +11,10 @@ namespace ValheimHotKeys
     {
         public const string ModGUID = "com.malafein.valheimhotkeys";
         public const string ModName = "Valheim HotKeys";
-        public const string ModVersion = "1.2.0";
+        public const string ModVersion = "1.3.0";
 
         public static ConfigEntry<KeyboardShortcut> ToggleHUDConfig;
         public static ConfigEntry<KeyboardShortcut> RepairHammerConfig;
-        public static ConfigEntry<KeyboardShortcut>[] HotbarConfigs = new ConfigEntry<KeyboardShortcut>[8];
         
         public static System.Collections.Generic.List<ConfigEntry<ItemBinding>> CustomItemBindings = new System.Collections.Generic.List<ConfigEntry<ItemBinding>>();
 
@@ -39,12 +38,6 @@ namespace ValheimHotKeys
             ToggleHUDConfig = Config.Bind("General", "ToggleHUD", new KeyboardShortcut(KeyCode.F3), "Hotkey to toggle the HUD visibility.");
             RepairHammerConfig = Config.Bind("Actions", "RepairHammer", new KeyboardShortcut(KeyCode.None), "Equips your hammer with repair mode selected. Press again while repairing to put the hammer away.");
             
-            for (int i = 0; i < 8; i++)
-            {
-                int slotNumber = i + 1;
-                HotbarConfigs[i] = Config.Bind("Hotbar", $"Slot{slotNumber}", new KeyboardShortcut(KeyCode.None), $"Hotkey for hotbar slot {slotNumber}.");
-            }
-
             for (int i = 0; i < 8; i++)
             {
                 int slotNumber = i + 1;

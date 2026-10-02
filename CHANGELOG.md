@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+* Removed the hotbar slot bindings. Valheim now has a rebindable alternate key for each hotbar slot in its own Controls menu. Any leftover [Hotbar] settings in your config file are ignored.
+* A custom item binding whose item is not in your inventory no longer logs a warning.
+
 ## 1.2.0
 * Added a Repair Hammer hotkey (unbound by default): one press equips your hammer with repair selected, a second press puts it away.
 

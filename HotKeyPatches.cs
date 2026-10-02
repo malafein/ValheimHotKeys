@@ -46,15 +46,6 @@ namespace ValheimHotKeys
                 return;
             }
 
-            for (int i = 0; i < 8; i++)
-            {
-                if (InputHelpers.IsDownPermissive(Plugin.HotbarConfigs[i].Value))
-                {
-                    __instance.UseHotbarItem(i + 1);
-                    return; // Only use one thing per frame
-                }
-            }
-
             if (InputHelpers.IsDownPermissive(Plugin.RepairHammerConfig.Value) && RepairHotkey.HandlePress(__instance))
             {
                 return; // Only use one thing per frame
@@ -99,7 +90,7 @@ namespace ValheimHotKeys
                     }
                     else
                     {
-                        ZLog.LogWarning($"[ValheimHotKeys] No item matching '{itemName}' found in inventory.");
+                        Plugin.Log.LogDebug($"No item matching '{itemName}' found in inventory.");
                     }
                 }
             }
