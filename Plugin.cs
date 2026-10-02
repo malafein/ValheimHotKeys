@@ -1,5 +1,6 @@
 using BepInEx;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
 
@@ -10,12 +11,15 @@ namespace ValheimHotKeys
     {
         public const string ModGUID = "com.malafein.valheimhotkeys";
         public const string ModName = "Valheim HotKeys";
-        public const string ModVersion = "1.1.1";
+        public const string ModVersion = "1.2.0";
 
         public static ConfigEntry<KeyboardShortcut> ToggleHUDConfig;
+        public static ConfigEntry<KeyboardShortcut> RepairHammerConfig;
         public static ConfigEntry<KeyboardShortcut>[] HotbarConfigs = new ConfigEntry<KeyboardShortcut>[8];
         
         public static System.Collections.Generic.List<ConfigEntry<ItemBinding>> CustomItemBindings = new System.Collections.Generic.List<ConfigEntry<ItemBinding>>();
+
+        internal static ManualLogSource Log;
 
         private readonly Harmony harmony = new Harmony(ModGUID);
         private static ConfigEntryBase _waitingEntry;
@@ -24,6 +28,8 @@ namespace ValheimHotKeys
 
         private void Awake()
         {
+            Log = Logger;
+
             TomlTypeConverter.AddConverter(typeof(ItemBinding), new TypeConverter
             {
                 ConvertToObject = (str, type) => ItemBinding.Deserialize(str),
@@ -31,6 +37,7 @@ namespace ValheimHotKeys
             });
 
             ToggleHUDConfig = Config.Bind("General", "ToggleHUD", new KeyboardShortcut(KeyCode.F3), "Hotkey to toggle the HUD visibility.");
+            RepairHammerConfig = Config.Bind("Actions", "RepairHammer", new KeyboardShortcut(KeyCode.None), "Equips your hammer with repair mode selected. Press again while repairing to put the hammer away.");
             
             for (int i = 0; i < 8; i++)
             {

@@ -38,6 +38,8 @@ namespace ValheimHotKeys
                 return;
             }
 
+            RepairHotkey.Update(__instance);
+
             bool takeInput = (bool)TakeInputMethod.Invoke(__instance, null);
             if (!takeInput)
             {
@@ -51,6 +53,11 @@ namespace ValheimHotKeys
                     __instance.UseHotbarItem(i + 1);
                     return; // Only use one thing per frame
                 }
+            }
+
+            if (InputHelpers.IsDownPermissive(Plugin.RepairHammerConfig.Value) && RepairHotkey.HandlePress(__instance))
+            {
+                return; // Only use one thing per frame
             }
 
             // Custom Item Hotkeys

@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0
+* Added a Repair Hammer hotkey (unbound by default): one press equips your hammer with repair selected, a second press puts it away.
+
 ## 1.1.1
 * Corrected documentation.
 

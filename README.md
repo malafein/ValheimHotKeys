@@ -5,6 +5,7 @@ A Valheim mod to add configurable hotkeys for various actions.
 ## Features
 
 - **Toggle HUD**: Quickly hide/show the in-game HUD (default `F3`).
+- **Repair Hammer**: One press equips your hammer with repair already selected (unbound by default). Press again while repairing to put the hammer away. It looks for any tool with a repair option rather than the vanilla hammer by name, so it should also work with modded hammers or tools that have one (untested; tools without a repair option are ignored).
 - **Hotbar Slot Bindings**: Assign custom keys to any of the 8 hotbar slots.
 - **Custom Item Bindings**:
     - Bind hotkeys to items by name (e.g., "Healing Mead", "Arrow"). This can be either the localized name or the internal item ID.
@@ -34,7 +35,7 @@ A Valheim mod to add configurable hotkeys for various actions.
 ## Configuration
 
 The `com.malafein.valheimhotkeys.cfg` file will be generated in your `BepInEx/config` folder after the first run.  
-There you can set the HUD toggle key, the eight hotbar slot bindings, and the eight custom item bindings.
+There you can set the HUD toggle key, the repair hammer key, the eight hotbar slot bindings, and the eight custom item bindings.
 
 **Recommendation**: Use a configuration manager like [shudnal's Configuration Manager](https://github.com/shudnal/ConfigurationManager) to easily edit bindings and settings in-game.
 
