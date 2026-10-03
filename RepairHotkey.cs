@@ -1,3 +1,4 @@
+using malafein.Valheim.Shared;
 using UnityEngine;
 
 namespace ValheimHotKeys
@@ -18,7 +19,7 @@ namespace ValheimHotKeys
             ItemDrop.ItemData tool = FindRepairTool(player, inventory);
             if (tool == null)
             {
-                Plugin.Log.LogDebug("No build tool with a repair piece found in inventory.");
+                Log.Debug("No build tool with a repair piece found in inventory.");
                 return false;
             }
 
@@ -110,7 +111,7 @@ namespace ValheimHotKeys
             Piece repair = FindRepairPiece(table);
             if (repair == null || !player.SetSelectedPiece(repair))
             {
-                Plugin.Log.LogWarning("Could not select the repair piece in the equipped build tool.");
+                Log.Warn("Could not select the repair piece in the equipped build tool.");
             }
         }
     }

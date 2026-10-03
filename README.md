@@ -6,6 +6,7 @@ A Valheim mod to add configurable hotkeys for various actions.
 
 - **Toggle HUD**: Quickly hide/show the in-game HUD (default `F3`).
 - **Repair Hammer**: One press equips your hammer with repair already selected (unbound by default). Press again while repairing to put the hammer away. It looks for any tool with a repair option rather than the vanilla hammer by name, so it should also work with modded hammers or tools that have one (untested; tools without a repair option are ignored).
+- **Hotbar Shortcuts**: Use hotbar slots 1-8 with key combinations such as `Alt + 1` (unbound by default). Valheim's Controls menu can give each slot an extra key, but not a combination.
 - **Custom Item Bindings**:
     - Bind hotkeys to items by name (e.g., "Healing Mead", "Arrow"). This can be either the localized name or the internal item ID.
     - **Partial Matching**: "Arrow" will match "Fire Arrow", "Wood Arrow", etc.
@@ -34,13 +35,15 @@ A Valheim mod to add configurable hotkeys for various actions.
 ## Configuration
 
 The `com.malafein.valheimhotkeys.cfg` file will be generated in your `BepInEx/config` folder after the first run.  
-There you can set the HUD toggle key, the repair hammer key, and the eight custom item bindings.
+There you can set the HUD toggle key, the repair hammer key, the hotbar shortcuts, and the eight custom item bindings.
 
 **Recommendation**: Use a configuration manager like [shudnal's Configuration Manager](https://github.com/shudnal/ConfigurationManager) to easily edit bindings and settings in-game.
 
 Mouse buttons may be bound, but only `Mouse0` through `Mouse4`, the buttons Valheim's input system supports.
 
-To put hotbar slots on other keys, use Valheim's own Controls menu, which now has a rebindable alternate key for each of Hotbar 1-8.
+To put a hotbar slot on a single key, use Valheim's own Controls menu, which has a rebindable alternate key for each of Hotbar 1-8. The hotbar shortcuts here are for combinations with Shift, Ctrl, or Alt.
+
+Shortcuts still fire when you hold modifiers they don't include, so they work while you sprint. Valheim's own keys ignore modifiers entirely, though, so a shortcut shares its key with any game binding on the same key: `Alt + 1` also uses hotbar slot 1. Left Shift and Left Ctrl are risky modifiers for hotbar shortcuts, because the game uses them to sprint and crouch: a `Left Shift + 1` shortcut fires every time you press 1 while sprinting. Alt, Right Shift, and Right Ctrl are free. Left and right modifiers are separate keys, as they are in the game. The BepInEx log warns when a shortcut shares a key with one of the game's.
 
 ## Changelog
 
