@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.4.0
 * Hotbar slot bindings are back, for key combinations with Shift, Ctrl, or Alt, which Valheim's Controls menu can't bind. Settings from before 1.3.0 are picked up again.
 * Custom item bindings are now named Item 1-8 instead of Slot 1-8, so they aren't mistaken for hotbar slots. Existing bindings carry over.
 * Binding a custom item key while holding the right Shift, Ctrl, or Alt now saves the right one. It used to save the left one, so the binding then only worked with the left key.
